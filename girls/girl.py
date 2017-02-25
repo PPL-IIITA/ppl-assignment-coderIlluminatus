@@ -5,6 +5,7 @@ class Girl(object):
     '''BASE CLASS'''
 
     def __init__(self, name, attr, mcost, intel, nature, criteria):
+        '''DEFAULT CONSTRUCTOR'''
         self.name = name
         self.attr = attr
         self.mcost = mcost
