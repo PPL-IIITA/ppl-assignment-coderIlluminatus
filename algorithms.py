@@ -101,7 +101,7 @@ def calculate_happiness(couple, gifts_list):
         gifts_list.sort(key=lambda x: x.price)
 
     logging.info('ENTERING  :\t' + couple.boy.name + ' and ' + couple.girl.name)
-    total_cost, count_gifts = 0, 0
+    total_cost, count_gifts, pos = 0, 0, 0
     for gift in gifts_list:
         if total_cost + gift.price >= couple.boy.budget:
             if couple.boy.nature != 'Generous':
@@ -109,6 +109,15 @@ def calculate_happiness(couple, gifts_list):
                 logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
                 total_cost += gift.price
                 count_gifts += 1
+
+            #A GEEK BOY CHECKS FOR AN ADDITIONAL LUXURY GIFT, IF BUDGET PERMITS
+            if couple.boy.nature == 'Geek' and total_cost < couple.boy.budget:
+                for gift_index in range(pos + 1, len(gifts_list)):
+                    if gifts_list[gift_index].nature == 'Luxury' and total_cost + gifts_list[gift_index] <= couple.boy.budget:
+                        logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name + ' (Additional Luxury Gift)')
+                        total_cost += gift.price
+                        count_gifts += 1
+            pos += 1            
             break
         couple.gift_basket.append(gift)
         logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
