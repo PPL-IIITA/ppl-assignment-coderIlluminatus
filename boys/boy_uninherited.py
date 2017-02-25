@@ -13,7 +13,7 @@ class Boy(object):
         self.min_attr = min_attr
         self.status = 'Single'
         self.nature = nature
-        self.partner = ''
+        self.partner = None
         self.happiness = 0
 
     def check_elligibility(self, girl):
@@ -25,4 +25,13 @@ class Boy(object):
     def match(self, girl):
         '''ASSIGNS GIRL AS THE PARTNER FOR THIS BOY'''
         self.status = 'Committed'
-        self.partner = girl.name
+        self.partner = girl
+
+    def set_happiness(self, gift_basket):
+        '''CALCULATES HAPPINESS OF THIS BOY'''
+        if self.nature == 'Miser':
+            self.happiness = sum(int(gift[0]) for gift in gift_basket)
+        elif self.nature == 'Generous':
+            self.happiness = self.partner.happiness
+        elif self.nature == 'Geek':
+            self.happiness = self.partner.intel

@@ -11,7 +11,7 @@ class Girl(object):
         self.intel = intel
         self.status = 'Single'
         self.nature = nature
-        self.partner = ''
+        self.partner = None
         self.happiness = 0
         self.criteria = criteria
 
@@ -24,4 +24,24 @@ class Girl(object):
     def match(self, boy):
         '''ASSIGNS BOY AS THE PARTNER FOR THIS GIRL'''
         self.status = 'Committed'
-        self.partner = boy.name
+        self.partner = boy
+
+    def set_happiness(self, gift_basket):
+        '''CALCULATES HAPPINESS OF THIS GIRL'''
+        from math import exp, log10
+
+        price_sum, value_sum = 0, 0
+        for gift in gift_basket:
+            if self.nature != 'Desparate':
+                value_sum += gift.value
+                if self.nature == 'Choosy' and gift.nature == 'Luxury':
+                    price_sum += gift.price * 2
+                else:
+                    price_sum += gift.price
+
+        if self.nature == 'Choosy':
+            self.happiness = log10(price_sum)
+        elif self.nature == 'Normal':
+            self.happiness = price_sum + value_sum
+        elif self.nature == 'Desparate':
+            self.happiness = exp(price_sum)
