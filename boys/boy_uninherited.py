@@ -30,7 +30,7 @@ class Boy(object):
     def set_happiness(self, gift_basket):
         '''CALCULATES HAPPINESS OF THIS BOY'''
         if self.nature == 'Miser':
-            self.happiness = sum(int(gift[0]) for gift in gift_basket)
+            self.happiness = self.budget - sum(gift.price for gift in gift_basket)
         elif self.nature == 'Generous':
             self.happiness = self.partner.happiness
         elif self.nature == 'Geek':

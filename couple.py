@@ -10,7 +10,7 @@ class Couple(object):
         self.girl = girl
         self.happiness = 0
         self.compatibility = 0
-        self.gift_list = []
+        self.gift_basket = []
 
     def set_happiness(self):
         '''CALCULATES COUPLE'S HAPPINESS'''

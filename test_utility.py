@@ -14,8 +14,8 @@ def create(filename, datalist):
 
 def random_generator_people():
     '''GENERATES RANDOM LIST OF BOYS AND GIRLS'''
-    n_boys = randint(10, 20)
-    n_girls = randint(10, n_boys-1)
+    n_boys = randint(11, 20)
+    n_girls = randint(10, (n_boys-1))
 
     boys_nature = ['Miser', 'Generous', 'Geek']
     girls_nature = ['Choosy', 'Normal', 'Desparate']
@@ -26,12 +26,10 @@ def random_generator_people():
                  randint(1, 100),\
                  randint(1, 100),\
                  randint(1, 100),\
-                 randint(1, 100),\
                  choice(boys_nature))
                   for i in range(n_boys)])
 
     girls_list = ([('Girl '+str(i + 1),\
-                 randint(1, 100),\
                  randint(1, 100),\
                  randint(1, 100),\
                  randint(1, 100),\
@@ -52,23 +50,23 @@ def random_generator_gifts():
     for i in range(n_gifts):
         current_gift_type = choice(gift_type)
         if current_gift_type == 'Essential':
-            gifts_list[i] = ('Gift '+str(i + 1),\
+            gifts_list.append(('Gift '+str(i + 1),\
                             randint(1, 100),\
                             randint(1, 100),\
-                            choice(gift_type))
+                            current_gift_type))
         elif current_gift_type == 'Luxury':
-            gifts_list[i] = ('Gift '+str(i + 1),\
+            gifts_list.append(('Gift '+str(i + 1),\
                             randint(1, 100),\
                             randint(1, 100),\
-                            choice(gift_type),\
+                            current_gift_type,\
                             randint(1, 5),\
-                            randint(1, 5))
+                            randint(1, 5)))
         elif current_gift_type == 'Utility':
-            gifts_list[i] = ('Gift '+str(i + 1),\
+            gifts_list.append(('Gift '+str(i + 1),\
                             randint(1, 100),\
                             randint(1, 100),\
-                            choice(gift_type),\
+                            current_gift_type,\
                             randint(1, 10),\
-                            randint(1, 10))
+                            randint(1, 10)))
 
     create('gifts.csv', gifts_list)
