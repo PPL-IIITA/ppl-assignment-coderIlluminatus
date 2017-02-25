@@ -4,8 +4,9 @@ class Gift(object):
 
     '''DOES NOT USE INHERITANCE'''
 
-    def __init__(self, price, value, nature, rating, difficulty, util_value, util_class):
+    def __init__(self, name, price, value, nature, rating, difficulty, util_value, util_class):
         '''DEFAULT CONSTRUCTOR'''
+        self.name = name
         self.price = price
         self.value = value
         self.nature = nature
