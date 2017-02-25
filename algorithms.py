@@ -145,11 +145,11 @@ def print_happy_couples(couples_list, k):
     print('\n' + str(k) + ' MOST HAPPY COUPLES :')
     happy_list = sorted(couples_list, key=lambda x: x.happiness, reverse=True)
     for i in range(k):
-        print(happy_list[i].girl.name + '\t  AND\t' + happy_list[i].boy.name)
+        print(happy_list[i].girl.name + '\t  AND\t' + happy_list[i].boy.name + '\tHAPPINESS    \t=\t' + str(happy_list[i].happiness))
 
 def print_compatible_couples(couples_list, k):
     '''DISPLAYS k MOST COMPATIBLE COUPLES'''
     print('\n' + str(k) + ' MOST COMPATIBLE COUPLES :')
     compatible_list = sorted(couples_list, key=lambda x: x.compatibility, reverse=True)
     for i in range(k):
-        print(compatible_list[i].girl.name + '\t  AND\t' + compatible_list[i].boy.name)
+        print(compatible_list[i].girl.name + '\t  AND\t' + compatible_list[i].boy.name + '\tCOMPATIBILITY\t=\t' + str(compatible_list[i].compatibility))
