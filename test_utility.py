@@ -19,6 +19,7 @@ def random_generator_people():
 
     boys_nature = ['Miser', 'Generous', 'Geek']
     girls_nature = ['Choosy', 'Normal', 'Desparate']
+    girls_criteria = ['Attractive', 'Rich', 'Intelligent']
 
     boys_list = ([('Boy '+str(i + 1),\
                  randint(1, 100),\
@@ -34,7 +35,8 @@ def random_generator_people():
                  randint(1, 100),\
                  randint(1, 100),\
                  randint(1, 100),\
-                 choice(girls_nature))
+                 choice(girls_nature),\
+                 choice(girls_criteria))
                    for i in range(n_girls)])
 
     create('boys.csv', boys_list)

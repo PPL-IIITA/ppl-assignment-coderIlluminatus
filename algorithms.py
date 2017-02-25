@@ -1,89 +1,17 @@
 '''ALL ALGORITHMIC OPERATIONS'''
 
-from random import randint
-from random import choice
 import csv
 import logging
 
-def create(filename, datalist):
-    '''CREATES csv ROWS FROM GIVEN DATA SET'''
-    newfile = open(filename, 'w')
-    writer = csv.writer(newfile, delimiter=',')
-
-    for i in datalist:
-        writer.writerow(i)
-
-def random_generator_people():
-    '''GENERATES RANDOM LIST OF BOYS AND GIRLS'''
-    n_boys = randint(10, 20)
-    n_girls = randint(10, n_boys-1)
-
-    boys_nature = ['Miser', 'Generous', 'Geek']
-    girls_nature = ['Choosy', 'Normal', 'Desparate']
-
-    boys_list = ([('Boy '+str(i + 1),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 choice(boys_nature))
-                  for i in range(n_boys)])
-
-    girls_list = ([('Girl '+str(i + 1),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 randint(1, 100),\
-                 choice(girls_nature))
-                   for i in range(n_girls)])
-
-    create('boys.csv', boys_list)
-    create('girls.csv', girls_list)
-
-def random_generator_gifts():
-    '''GENERATES RANDOM LIST OF BOYS AND GIRLS'''
-    n_gifts = randint(100, 200)
-
-    gift_type = ['Essential', 'Luxury', 'Utility']
-    gifts_list = []
-
-    for i in range(n_gifts):
-        current_gift_type = choice(gift_type)
-        if current_gift_type == 'Essential':
-            gifts_list[i] = ('Gift '+str(i + 1),\
-                            randint(1, 100),\
-                            randint(1, 100),\
-                            choice(gift_type))
-        elif current_gift_type == 'Luxury':
-            gifts_list[i] = ('Gift '+str(i + 1),\
-                            randint(1, 100),\
-                            randint(1, 100),\
-                            choice(gift_type),\
-                            randint(1, 5),\
-                            randint(1, 5))
-        elif current_gift_type == 'Utility':
-            gifts_list[i] = ('Gift '+str(i + 1),\
-                            randint(1, 100),\
-                            randint(1, 100),\
-                            choice(gift_type),\
-                            randint(1, 10),\
-                            randint(1, 10))
-
-    create('gifts.csv', gifts_list)
-
-
-#SPECIFYING FORMAT OF EVENT LOG
-logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
-					datefmt='%d/%m/%Y %I:%M:%S %p',\
-					level=logging.DEBUG,\
-                    filename='eventlog.txt',\
-                    filemode='w')
-
-def make_couples():
+def make_couples(is_inherited):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
-    from boys.boy_uninherited import Boy
-    from girls.girl_uninherited import Girl
+    if is_inherited:
+        from boys.boy import Boy
+        from girls.girl import Girl
+    else:
+        from boys.boy_uninherited import Boy
+        from girls.girl_uninherited import Girl
+    from couple import Couple
 
     with open('boys.csv', 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
@@ -93,21 +21,41 @@ def make_couples():
 
     with open('girls.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4]))\
+        girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4]), row[5])\
                       for row in reader]
         csvfile.close()
 
+    couples_list = []
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+					    datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='w')
+
     logging.info('\nFINDING SUITABLE MATCH FOR GIRLS\n')
     for girl in girl_pool:
+        if girl.criteria == 'Attractive':
+            boy_pool.sort(key=lambda x: x[1]).reverse()
+        elif girl.criteria == 'Rich':
+            boy_pool.sort(key=lambda x: x[2]).reverse()
+        elif girl.criteria == 'Intelligent':
+            boy_pool.sort(key=lambda x: x[3]).reverse()
+
         for boy in boy_pool:
-            logging.info('COURTING   :\t' + girl.name + ' is checking out ' + boy.name)
-            if boy.check_elligibility(girl) and girl.check_elligibility(boy):
-                boy.status, girl.status = 'Committed', 'Committed'
-                boy.partner, girl.partner = girl.name, boy.name
-                logging.info('MATCHED    :\t' + girl.name + ' is committed with ' + boy.name + '\n')
-                break
+            if boy.status == 'Single':
+                logging.info('COURTING   :\t' + girl.name + ' is checking out ' + boy.name)
+                if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                    boy.match(girl)
+                    girl.match(boy)
+                    logging.info('MATCHED    :\t' + girl.name + ' is committed with ' + boy.name + '\n')
+                    couples_list.append((boy, girl))
+                    break
+
+        if girl.status == 'Single':
+            logging.info('UNMATCHED  :\t' + girl.name + ' could not find a suitable partner\n')
 
     print('COUPLES FORMED\n')
-    for girl in girl_pool:
-        if girl.status == 'Committed':
-            print(girl.name + '\t  AND\t' + girl.partner)
+    for couple in couples_list:
+        print(couple[1].name + '\t  AND\t' + couple[0].name)

@@ -4,7 +4,7 @@ class Girl(object):
 
     '''DOES NOT USE INHERITANCE'''
 
-    def __init__(self, name, attr, mcost, intel, nature):
+    def __init__(self, name, attr, mcost, intel, nature, criteria):
         self.name = name
         self.attr = attr
         self.mcost = mcost
@@ -13,9 +13,15 @@ class Girl(object):
         self.nature = nature
         self.partner = ''
         self.happiness = 0
+        self.criteria = criteria
 
     def check_elligibility(self, boy):
         '''CHECKS WHETHER THIS BOY IS ELIGIBLE FOR PAIRING WITH THE CURRENT GIRL'''
         if self.mcost <= boy.budget:
             return True
         return False
+
+    def match(self, boy):
+        '''ASSIGNS BOY AS THE PARTNER FOR THIS GIRL'''
+        self.status = 'Committed'
+        self.partner = boy.name

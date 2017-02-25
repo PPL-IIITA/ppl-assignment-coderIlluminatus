@@ -21,3 +21,8 @@ class Boy(object):
         if (self.budget >= girl.mcost) and (girl.attr >= self.min_attr):
             return True
         return False
+
+    def match(self, girl):
+        '''ASSIGNS GIRL AS THE PARTNER FOR THIS BOY'''
+        self.status = 'Committed'
+        self.partner = girl.name
