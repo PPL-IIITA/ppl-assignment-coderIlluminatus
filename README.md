@@ -41,3 +41,9 @@
 * Class definitions are present in `boy_uninherited.py`, `girl_uninherited.py`, `gift_uninherited.py` and `couple.py`
 * Random generator funcions are present in `test_utility.py`
 * .csv files `boys.csv`, `girls.csv` and `gifts.csv` will have randomly generated data set
+
+### Command to see documentation
+
+``` 
+    bash show_doc.sh
+```
