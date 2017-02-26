@@ -2,13 +2,7 @@
 
 import csv
 import logging
-
-#SPECIFYING FORMAT OF EVENT LOG
-logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
-                    datefmt='%d/%m/%Y %I:%M:%S %p',\
-                    level=logging.DEBUG,\
-                    filename='eventlog.txt',\
-                    filemode='w')
+import pickle
 
 def make_couples(is_inherited):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
@@ -31,6 +25,13 @@ def make_couples(is_inherited):
         girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), row[4], row[5])\
                       for row in reader]
         csvfile.close()
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='w')
 
     couples_list = []
 
@@ -60,7 +61,7 @@ def make_couples(is_inherited):
     for couple in couples_list:
         print(couple.girl.name + '\t  AND\t' + couple.boy.name)
 
-    return couples_list
+    pickle.dump(couples_list, open("couple.p", "wb"))
 
 def give_gifts(is_inherited, couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
@@ -68,6 +69,13 @@ def give_gifts(is_inherited, couples_list):
         from gifts.gift import Gift
     else:
         from gifts.gift_uninherited import Gift
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
 
     gifts_list = []
 
@@ -94,6 +102,13 @@ def calculate_happiness(couple, gifts_list):
         gifts_list.sort(key=lambda x: x.price, reverse=True)
     else:
         gifts_list.sort(key=lambda x: x.price)
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
 
     logging.info('ENTERING  :\t' + couple.boy.name + ' and ' + couple.girl.name)
     total_cost, count_gifts, pos = 0, 0, 0

@@ -1,17 +1,13 @@
 '''QUESTION 2'''
 
-from test_utility import random_generator_people
-from test_utility import random_generator_gifts
-from algorithms import make_couples
+import pickle
+
 from algorithms import give_gifts
 from algorithms import print_gifts
 from algorithms import print_happy_couples
 from algorithms import print_compatible_couples
 
-random_generator_people()
-random_generator_gifts()
-
-couples_list = make_couples(False)
+couples_list = pickle.load(open("couple.p", "rb"))
 
 give_gifts(False, couples_list)
 
