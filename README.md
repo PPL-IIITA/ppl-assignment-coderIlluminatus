@@ -64,7 +64,7 @@
 
 ## Documentation and Class Diagrams
 
-* Documentation is available [here](https://ppl-iiita.github.io/ppl-assignment-coderIlluminatus/documentation/html/)
+* Documentation is available [here](https://ppl-iiita.github.io/ppl-assignment-coderIlluminatus/)
 
 ### Command to see documentation offline
 
