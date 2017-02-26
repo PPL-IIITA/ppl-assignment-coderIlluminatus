@@ -65,14 +65,9 @@ def make_couples(is_inherited):
 def give_gifts(is_inherited, couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
     if is_inherited:
-        from boys.boy import Boy
-        from girls.girl import Girl
         from gifts.gift import Gift
     else:
-        from boys.boy_uninherited import Boy
-        from girls.girl_uninherited import Girl
         from gifts.gift_uninherited import Gift
-    from couple import Couple
 
     gifts_list = []
 
