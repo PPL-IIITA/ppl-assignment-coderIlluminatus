@@ -1,3 +1,3 @@
 #!/bin/bash
 
-xdg-open ./documentation/html/index.html
+xdg-open ./docs/index.html
