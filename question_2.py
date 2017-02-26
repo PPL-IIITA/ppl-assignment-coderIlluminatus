@@ -2,13 +2,10 @@
 
 import pickle
 
-from test_utility import random_generator_gifts
 from algorithms import give_gifts
 from algorithms import print_gifts
 from algorithms import print_happy_couples
 from algorithms import print_compatible_couples
-
-random_generator_gifts()
 
 couples_list = pickle.load(open("couple.p", "rb"))
 
