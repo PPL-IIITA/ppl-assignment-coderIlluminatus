@@ -1,21 +1,9 @@
 var searchData=
 [
-  ['boy',['Boy',['../classboys_1_1boy_1_1_boy.html',1,'boys::boy']]],
   ['boy',['Boy',['../classboys_1_1boy__uninherited_1_1_boy.html',1,'boys::boy_uninherited']]],
   ['boy',['boy',['../classcouple_1_1_couple.html#a9add8e4c50bcbf4424339df43ed77df6',1,'couple::Couple']]],
-  ['boy',['boy',['../namespaceboys_1_1boy.html',1,'boys']]],
-  ['boy_2epy',['boy.py',['../boy_8py.html',1,'']]],
-  ['boy_5fgeek',['boy_geek',['../namespaceboys_1_1boy__geek.html',1,'boys']]],
-  ['boy_5fgeek_2epy',['boy_geek.py',['../boy__geek_8py.html',1,'']]],
-  ['boy_5fgenerous',['boy_generous',['../namespaceboys_1_1boy__generous.html',1,'boys']]],
-  ['boy_5fgenerous_2epy',['boy_generous.py',['../boy__generous_8py.html',1,'']]],
-  ['boy_5fmiser',['boy_miser',['../namespaceboys_1_1boy__miser.html',1,'boys']]],
-  ['boy_5fmiser_2epy',['boy_miser.py',['../boy__miser_8py.html',1,'']]],
   ['boy_5funinherited',['boy_uninherited',['../namespaceboys_1_1boy__uninherited.html',1,'boys']]],
   ['boy_5funinherited_2epy',['boy_uninherited.py',['../boy__uninherited_8py.html',1,'']]],
-  ['boygeek',['BoyGeek',['../classboys_1_1boy__geek_1_1_boy_geek.html',1,'boys::boy_geek']]],
-  ['boygenerous',['BoyGenerous',['../classboys_1_1boy__generous_1_1_boy_generous.html',1,'boys::boy_generous']]],
-  ['boymiser',['BoyMiser',['../classboys_1_1boy__miser_1_1_boy_miser.html',1,'boys::boy_miser']]],
   ['boys',['boys',['../namespaceboys.html',1,'']]],
-  ['budget',['budget',['../classboys_1_1boy_1_1_boy.html#ad2a3cceabf13f65bd93b878075d73c55',1,'boys.boy.Boy.budget()'],['../classboys_1_1boy__uninherited_1_1_boy.html#a0abd7cec036a08b7d7fb23db1709246d',1,'boys.boy_uninherited.Boy.budget()']]]
+  ['budget',['budget',['../classboys_1_1boy__uninherited_1_1_boy.html#a0abd7cec036a08b7d7fb23db1709246d',1,'boys::boy_uninherited::Boy']]]
 ];

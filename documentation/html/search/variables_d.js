@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type',['type',['../classgifts_1_1gift__essential_1_1_gift_essential.html#a57225de66cf1472099d0762784ffdbbb',1,'gifts.gift_essential.GiftEssential.type()'],['../classgifts_1_1gift__luxury_1_1_gift_luxury.html#a396a3f85420d5b5e0809a7fc51cbd37a',1,'gifts.gift_luxury.GiftLuxury.type()'],['../classgifts_1_1gift__utility_1_1_gift_utility.html#af9b9177cd8cb081752b83241a863368c',1,'gifts.gift_utility.GiftUtility.type()']]]
+  ['util_5fclass',['util_class',['../classgifts_1_1gift__uninherited_1_1_gift.html#a7fd2164d8bd791fa524e82d2ef6316aa',1,'gifts::gift_uninherited::Gift']]],
+  ['util_5fvalue',['util_value',['../classgifts_1_1gift__uninherited_1_1_gift.html#a640df8d6eb45f9027260eb8053bb6b43',1,'gifts::gift_uninherited::Gift']]]
 ];
