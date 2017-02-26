@@ -9,11 +9,15 @@ from algorithms import print_compatible_couples
 
 couples_list = pickle.load(open("couple.p", "rb"))
 
-give_gifts(False, couples_list)
+if len(couples_list) >= 1:
+    give_gifts(False, couples_list)
 
-print_gifts(couples_list)
+    print_gifts(couples_list)
 
-from random import randint
-k = randint(1, len(couples_list))
-print_happy_couples(couples_list, int(k))
-print_compatible_couples(couples_list, int(k))
+    from random import randint
+    k = randint(1, len(couples_list))
+    print_happy_couples(couples_list, int(k))
+    print_compatible_couples(couples_list, int(k))
+
+else:
+    print("NO COUPLES FOUND.")

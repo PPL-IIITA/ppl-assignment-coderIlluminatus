@@ -58,8 +58,11 @@ def make_couples(is_inherited):
             logging.info('UNMATCHED  :\t' + girl.name + ' could not find a suitable partner\n')
 
     print('COUPLES FORMED\n')
-    for couple in couples_list:
-        print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+    if len(couples_list) >= 1:
+        for couple in couples_list:
+            print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+    else:
+        print('NO COUPLES FORMED.')
 
     pickle.dump(couples_list, open("couple.p", "wb"))
 
