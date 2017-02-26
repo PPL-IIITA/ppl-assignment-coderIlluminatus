@@ -1,2 +1,41 @@
 # ppl-assignment-coderIlluminatus
-This is IIT2015511.
+
+## Name           : Sayantan Chatterjee
+## Enrollment no. : IIT 2015 511
+## Username       : coderIlluminatus
+
+### Language:
+
+```
+ Python 3.5.2
+
+### Platform:
+
+```
+ Platform:
+ VS Code Version 1.8.1
+
+### Operating System:
+
+```
+ OS:
+ Distributor  :	elementary
+ Description  :	elementary OS 0.4 Loki
+ Release      :	0.4
+ Codename     :	loki
+
+
+### Testing instructions
+* Question 1:
+``` 
+    python3 question_1.py
+
+* Question 2:
+```
+    python3 question_2.py
+
+* All events will be logged in `eventlog.txt`
+* Algorithmic functions are present in `algorithms.py`
+* Class definitions are present in `boy_uninherited.py`, `girl_uninherited.py`, `gift_uninherited.py` and `couple.py`
+* Random generator funcions are present in `test_utility.py`
+* .csv files `boys.csv`, `girls.csv` and `gifts.csv` will have randomly generated data set
