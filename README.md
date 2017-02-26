@@ -79,6 +79,6 @@
 
 ## Tools Used
 
-* [doxygen](https://www.doxygen.org)   :  Generates automatic documentation
-* [graphviz](https://www.graphviz.org)  :  Generates class, inheritance and collaboration diagrams in documentation 
+* [doxygen](http://www.stack.nl/~dimitri/doxygen/)   :  Generates automatic documentation
+* [graphviz](http://www.graphviz.org/)  :  Generates class, inheritance and collaboration diagrams in documentation 
 * [pyreverse](https://pypi.python.org/pypi/pyreverse/0.5.1) :  Generates class diagrams separately in .png (component of pylint)
