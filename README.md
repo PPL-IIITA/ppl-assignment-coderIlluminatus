@@ -41,8 +41,8 @@
 ```
     python3 question_2.py
 ```
->** NOTE: Question 2 uses the couples allocated in Question 1, as per given assignment.**
->**       Please execute Question 1 before executing Question 2**
+>**NOTE**: Question 2 uses the couples allocated in Question 1, as per given assignment.
+>      Please execute Question 1 before executing Question 2
 
 * All events will be logged in `eventlog.txt`
 * Algorithmic functions are present in `algorithms.py`
