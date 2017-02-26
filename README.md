@@ -1,8 +1,18 @@
-# ppl-assignment-coderIlluminatus
+# Principles of Programming Languages (IPPL 430 C) Assignment
+## Object Oriented Programming  
+### Sayantan Chatterjee - IIT 2015 511
 
-## Name           : Sayantan Chatterjee
-## Enrollment no. : IIT 2015 511
-## Username       : coderIlluminatus
+<img src="https://img.shields.io/badge/language-Python3-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/completion-20%25-yellow.svg"/>
+<img src="https://img.shields.io/badge/VS Code-8.1-blue.svg"/>  
+
+### Contents
+* [Build Details](#build-details)
+* [Testing Instructions](#testing-instructions)
+* [Documentation and Class Diagrams](#documentation-and-class-diagrams)
+* [Tools Used](#tools-used) 
+
+## Build Details
 
 ### Language:
 
@@ -25,7 +35,8 @@
  Codename     :	loki
 ```
 
-### Testing instructions
+## Testing instructions
+
 * Generate random data set (Boys, Girls, Gifts):
 ```
     python3 test_utility.py
@@ -50,10 +61,23 @@
 * Random generator functions are present in `test_utility.py`
 * .csv files `boys.csv`, `girls.csv` and `gifts.csv` will have randomly generated data set
 
-### Command to see documentation
+## Documentation and Class Diagrams
+
+* Documentation is available [here](https://ppl-iiita.github.io/ppl-assignment-coderIlluminatus/documentation/html/)
+
+### Command to see documentation offline
 
 ``` 
     bash show_doc.sh
 ```
+
+### Class Diagrams
+
 * All diagrams are already included in html documentation
 * Class diagrams are separately present in `/diagrams/*.png`
+
+## Tools Used
+
+* doxygen   :  Generates automatic documentation
+* graphviz  :  Generates class, inheritance and collaboration diagrams in documentation 
+* pyreverse :  Generates class diagrams separately in .png (component of pylint)
