@@ -8,31 +8,33 @@
 
 ```
  Python 3.5.2
+```
 
 ### Platform:
 
 ```
- Platform:
  VS Code Version 1.8.1
+```
 
 ### Operating System:
 
 ```
- OS:
  Distributor  :	elementary
  Description  :	elementary OS 0.4 Loki
  Release      :	0.4
  Codename     :	loki
-
+```
 
 ### Testing instructions
 * Question 1:
 ``` 
     python3 question_1.py
+```
 
 * Question 2:
 ```
     python3 question_2.py
+```
 
 * All events will be logged in `eventlog.txt`
 * Algorithmic functions are present in `algorithms.py`

@@ -5,7 +5,7 @@ import logging
 
 #SPECIFYING FORMAT OF EVENT LOG
 logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
-					datefmt='%d/%m/%Y %I:%M:%S %p',\
+                    datefmt='%d/%m/%Y %I:%M:%S %p',\
                     level=logging.DEBUG,\
                     filename='eventlog.txt',\
                     filemode='w')
