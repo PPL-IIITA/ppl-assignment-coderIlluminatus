@@ -26,6 +26,11 @@
 ```
 
 ### Testing instructions
+* Generate random data set (Boys, Girls, Gifts):
+```
+    python3 test_utility.py
+```
+
 * Question 1:
 ``` 
     python3 question_1.py

@@ -70,3 +70,7 @@ def random_generator_gifts():
                             randint(1, 10)))
 
     create('gifts.csv', gifts_list)
+
+if __name__ == "__main__":
+    random_generator_people()
+    random_generator_gifts()
