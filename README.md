@@ -44,7 +44,7 @@
 * All events will be logged in `eventlog.txt`
 * Algorithmic functions are present in `algorithms.py`
 * Class definitions are present in `boy_uninherited.py`, `girl_uninherited.py`, `gift_uninherited.py` and `couple.py`
-* Random generator funcions are present in `test_utility.py`
+* Random generator functions are present in `test_utility.py`
 * .csv files `boys.csv`, `girls.csv` and `gifts.csv` will have randomly generated data set
 
 ### Command to see documentation
