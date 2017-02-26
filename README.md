@@ -52,3 +52,5 @@
 ``` 
     bash show_doc.sh
 ```
+* All diagrams are already included in html documentation
+* Class diagrams are separately present in `/diagrams/*.png`
