@@ -4,7 +4,8 @@
 
 <img src="https://img.shields.io/badge/language-Python3-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/completion-20%25-yellow.svg"/>
-<img src="https://img.shields.io/badge/VS Code-8.1-blue.svg"/>  
+<img src="https://img.shields.io/badge/elementary OS-0.4-red.svg"/>
+<img src="https://img.shields.io/badge/VS Code-1.8.1-blue.svg"/>  
 
 ### Contents
 * [Build Details](#build-details)
@@ -78,6 +79,6 @@
 
 ## Tools Used
 
-* doxygen   :  Generates automatic documentation
-* graphviz  :  Generates class, inheritance and collaboration diagrams in documentation 
-* pyreverse :  Generates class diagrams separately in .png (component of pylint)
+* [doxygen](https://www.doxygen.org)   :  Generates automatic documentation
+* [graphviz](https://www.graphviz.org)  :  Generates class, inheritance and collaboration diagrams in documentation 
+* [pyreverse](https://pypi.python.org/pypi/pyreverse/0.5.1) :  Generates class diagrams separately in .png (component of pylint)
