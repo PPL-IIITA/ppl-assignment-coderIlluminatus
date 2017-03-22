@@ -34,10 +34,10 @@ class Girl(object):
         for gift in gift_basket:
             if self.nature != 'Desparate':
                 value_sum += gift.value
-                if self.nature == 'Choosy' and gift.nature == 'Luxury':
-                    price_sum += gift.price * 2
-                else:
-                    price_sum += gift.price
+            if self.nature == 'Choosy' and gift.nature == 'Luxury':
+                price_sum += gift.price * 2
+            else:
+                price_sum += gift.price
 
         if self.nature == 'Choosy':
             self.happiness = log10(price_sum)

@@ -12,6 +12,19 @@ class Couple(object):
         self.compatibility = 0
         self.gift_basket = []
 
+    def get_boy_nature(self):
+        if(hasattr(self.boy, 'nature')):
+            return self.boy.nature
+        else:
+            return type(self.boy).__name__[3:]
+
+    def get_girl_nature(self):
+        if(hasattr(self.girl, 'nature')):
+            return self.girl.nature
+        else:
+            return type(self.girl).__name__[4:]
+
+
     def set_happiness(self):
         '''CALCULATES COUPLE'S HAPPINESS'''
         self.happiness = self.boy.happiness + self.girl.happiness

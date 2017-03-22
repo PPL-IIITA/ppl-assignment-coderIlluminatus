@@ -1,9 +1,14 @@
 '''GENEROUS BOY'''
 
-import boy as base
+from boys.boy import Boy
 
-class BoyGenerous(base.Boy):
+class BoyGenerous(Boy):
 
     '''DEFAULT CONSTRUCTOR'''
-    def __init__(self, name, attr, budget, intel):
-        super(BoyGenerous, self).__init__(name, attr, budget, intel)
+    
+    def __init__(self, name, attr, budget, intel, min_attr):
+        super(BoyGenerous, self).__init__(name, attr, budget, intel, min_attr)
+
+    def set_happiness(self, gift_basket):
+        '''CALCULATES HAPPINESS OF GENEROUS BOY'''
+        self.happiness = self.partner.happiness

@@ -4,14 +4,13 @@ class Girl(object):
 
     '''BASE CLASS'''
 
-    def __init__(self, name, attr, mcost, intel, nature, criteria):
+    def __init__(self, name, attr, mcost, intel, criteria):
         '''DEFAULT CONSTRUCTOR'''
         self.name = name
         self.attr = attr
         self.mcost = mcost
         self.intel = intel
         self.status = 'Single'
-        self.nature = nature
         self.partner = None
         self.happiness = 0
         self.criteria = criteria

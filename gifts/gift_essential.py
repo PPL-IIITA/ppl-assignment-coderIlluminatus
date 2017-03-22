@@ -1,10 +1,9 @@
 '''ESSENTIAL GIFT'''
 
-import gift as base
+from gifts.gift import Gift
 
-class GiftEssential(base.Gift):
+class GiftEssential(Gift):
 
     '''DEFAULT CONSTRUCTOR'''
-    def __init__(self, price, value):
-        super(GiftEssential, self).__init__(price, value)
-        self.type = 'Essential'
+    def __init__(self, name, price, value):
+        super(GiftEssential, self).__init__(name, price, value)

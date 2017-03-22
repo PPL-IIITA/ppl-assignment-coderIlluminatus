@@ -8,22 +8,51 @@ def make_couples(is_inherited):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
     if is_inherited:
         from boys.boy import Boy
+        from boys.boy_miser import BoyMiser
+        from boys.boy_generous import BoyGenerous
+        from boys.boy_geek import BoyGeek
+
         from girls.girl import Girl
+        from girls.girl_choosy import GirlChoosy
+        from girls.girl_normal import GirlNormal
+        from girls.girl_desparate import GirlDesparate
+
     else:
         from boys.boy_uninherited import Boy
         from girls.girl_uninherited import Girl
+
     from couple import Couple
 
     with open('boys.csv', 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        boy_pool = [Boy(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4]), row[5])\
-                     for row in reader]
+        if is_inherited:
+            boy_pool = []
+            for row in reader:
+                if row[5] == 'Miser':
+                    boy_pool.append(BoyMiser(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+                elif row[5] == 'Generous':
+                    boy_pool.append(BoyGenerous(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+                elif row[5] == 'Geek':
+                    boy_pool.append(BoyGeek(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+        else:
+            boy_pool = [Boy(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4]), row[5])\
+                        for row in reader]
         csvfile.close()
 
     with open('girls.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), row[4], row[5])\
-                      for row in reader]
+        if is_inherited:
+            girl_pool = []
+            for row in reader:
+                if row[4] == 'Choosy':
+                    girl_pool.append(GirlChoosy(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
+                elif row[4] == 'Normal':
+                    girl_pool.append(GirlNormal(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
+                elif row[4] == 'Desparate':
+                    girl_pool.append(GirlDesparate(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
+        else:
+            girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), row[4], row[5])\
+                        for row in reader]
         csvfile.close()
 
     #SPECIFYING FORMAT OF EVENT LOG
@@ -61,6 +90,7 @@ def make_couples(is_inherited):
     if len(couples_list) >= 1:
         for couple in couples_list:
             print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+        print('\n\n')
     else:
         print('NO COUPLES FORMED.')
 
@@ -70,6 +100,9 @@ def give_gifts(is_inherited, couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
     if is_inherited:
         from gifts.gift import Gift
+        from gifts.gift_essential import GiftEssential
+        from gifts.gift_luxury import GiftLuxury
+        from gifts.gift_utility import GiftUtility
     else:
         from gifts.gift_uninherited import Gift
 
@@ -86,12 +119,20 @@ def give_gifts(is_inherited, couples_list):
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             current_gift_type = row[3]
-            if current_gift_type == 'Essential':
-                gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, 0, 0))
-            elif current_gift_type == 'Luxury':
-                gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], int(row[4]), int(row[5]), 0, 0))
-            elif current_gift_type == 'Utility':
-                gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, int(row[4]), int(row[5])))
+            if is_inherited:
+                if current_gift_type == 'Essential':
+                    gifts_list.append(GiftEssential(row[0], int(row[1]), int(row[2])))
+                elif current_gift_type == 'Luxury':
+                    gifts_list.append(GiftLuxury(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
+                elif current_gift_type == 'Utility':
+                    gifts_list.append(GiftUtility(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
+            else:
+                if current_gift_type == 'Essential':
+                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, 0, 0))
+                elif current_gift_type == 'Luxury':
+                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], int(row[4]), int(row[5]), 0, 0))
+                elif current_gift_type == 'Utility':
+                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, int(row[4]), int(row[5])))
         csvfile.close()
 
     logging.info('\n\nGIFTING DATE : Valentine\'s Day\n')
@@ -101,7 +142,7 @@ def give_gifts(is_inherited, couples_list):
 def calculate_happiness(couple, gifts_list):
     '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
 
-    if couple.boy.nature == 'Generous':
+    if couple.get_boy_nature() == 'Generous':
         gifts_list.sort(key=lambda x: x.price, reverse=True)
     else:
         gifts_list.sort(key=lambda x: x.price)
@@ -117,14 +158,14 @@ def calculate_happiness(couple, gifts_list):
     total_cost, count_gifts, pos = 0, 0, 0
     for gift in gifts_list:
         if total_cost + gift.price >= couple.boy.budget:
-            if couple.boy.nature != 'Generous':
+            if couple.get_boy_nature() != 'Generous':
                 couple.gift_basket.append(gift)
                 logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
                 total_cost += gift.price
                 count_gifts += 1
 
             #A GEEK BOY CHECKS FOR AN ADDITIONAL LUXURY GIFT, IF BUDGET PERMITS
-            if couple.boy.nature == 'Geek' and total_cost < couple.boy.budget:
+            if couple.get_boy_nature() == 'Geek' and total_cost < couple.boy.budget:
                 for gift_index in range(pos + 1, len(gifts_list)):
                     if gifts_list[gift_index].nature == 'Luxury' and total_cost + gifts_list[gift_index] <= couple.boy.budget:
                         logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name + ' (Additional Luxury Gift)')
@@ -156,8 +197,8 @@ def print_gifts(couples_list):
     '''DISPLAYS EXCHANGED GIFTS FOR EACH COUPLE'''
     for couple in couples_list:
         print('GIFTS EXCHANGED BETWEEN ' + couple.boy.name + ' AND ' + couple.girl.name)
-        print('BOY \nNATURE      : ' + couple.boy.nature + '\nBUDGET      : ' + str(couple.boy.budget))
-        print('\nGIRL \nNATURE      : ' + couple.girl.nature + '\nMAINTENANCE : ' + str(couple.girl.mcost) + '\n')
+        print('BOY \nNATURE      : ' + couple.get_boy_nature() + '\nBUDGET      : ' + str(couple.boy.budget))
+        print('\nGIRL \nNATURE      : ' + couple.get_girl_nature() + '\nMAINTENANCE : ' + str(couple.girl.mcost) + '\n')
         for gift in couple.gift_basket:
             print(gift.name + '  \t' + 'PRICE = ' + str(gift.price) + '\tVALUE = ' + str(gift.value))
         print('\n\n')

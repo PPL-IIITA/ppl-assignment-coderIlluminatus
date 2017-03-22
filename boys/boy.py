@@ -4,7 +4,7 @@ class Boy(object):
 
     '''BASE CLASS'''
 
-    def __init__(self, name, attr, budget, intel, min_attr, nature):
+    def __init__(self, name, attr, budget, intel, min_attr):
         '''DEFAULT CONSTRUCTOR'''
         self.name = name
         self.attr = attr
@@ -12,7 +12,6 @@ class Boy(object):
         self.intel = intel
         self.min_attr = min_attr
         self.status = 'Single'
-        self.nature = nature
         self.partner = None
         self.happiness = 0
 
