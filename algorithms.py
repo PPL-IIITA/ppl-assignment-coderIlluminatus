@@ -68,7 +68,7 @@ def pair_up(boy_pool, girl_pool):
     from couple import Couple
     couples_list = []
 
-    logging.info('\nFINDING SUITABLE MATCH FOR GIRLS\n')
+    logging.info('\n\nFINDING SUITABLE MATCH FOR GIRLS\n')
     for girl in girl_pool:
         if girl.criteria == 'Attractive':
             boy_pool.sort(key=lambda x: x.attr, reverse=True)
@@ -231,6 +231,7 @@ def move_on(couples_list, k):
                         filemode='a')
     unhappy_list = sorted(couples_list, key=lambda x: x.happiness)
     print('\nBREAKING UP ' + str(k) + ' LEAST HAPPY COUPLES :')
+    logging.info('\n\nENDING RELEATIONSHIPS\n')
     boys_broken, girls_broken = [], []
     for i in range(k):
         logging.info('BREAKING UP  :\t' + unhappy_list[i].boy.name + ' and ' + unhappy_list[i].girl.name)
@@ -242,5 +243,4 @@ def move_on(couples_list, k):
     new_couples_list = pair_up(boys_broken, girls_broken)
     couples_list = couples_list + new_couples_list
     give_gifts(True, new_couples_list)
-    print_happy_couples(new_couples_list, len(couples_list))
     pickle.dump(couples_list, open("couple.p", "wb"))
