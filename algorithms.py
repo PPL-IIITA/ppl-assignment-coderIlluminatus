@@ -21,8 +21,6 @@ def make_couples(is_inherited):
         from boys.boy_uninherited import Boy
         from girls.girl_uninherited import Girl
 
-    from couple import Couple
-
     with open('boys.csv', 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         if is_inherited:
@@ -55,6 +53,11 @@ def make_couples(is_inherited):
                         for row in reader]
         csvfile.close()
 
+    couples_list = pair_up(boy_pool, girl_pool)
+    pickle.dump(couples_list, open("couple.p", "wb"))
+
+def pair_up(boy_pool, girl_pool):
+    '''PAIRS UP COUPLES FROM BOY POOL AND GIRL POOL'''
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
                         datefmt='%d/%m/%Y %I:%M:%S %p',\
@@ -62,6 +65,7 @@ def make_couples(is_inherited):
                         filename='eventlog.txt',\
                         filemode='w')
 
+    from couple import Couple
     couples_list = []
 
     logging.info('\nFINDING SUITABLE MATCH FOR GIRLS\n')
@@ -93,8 +97,7 @@ def make_couples(is_inherited):
         print('\n\n')
     else:
         print('NO COUPLES FORMED.')
-
-    pickle.dump(couples_list, open("couple.p", "wb"))
+    return couples_list
 
 def give_gifts(is_inherited, couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
@@ -138,6 +141,7 @@ def give_gifts(is_inherited, couples_list):
     logging.info('\n\nGIFTING DATE : Valentine\'s Day\n')
     for couple in couples_list:
         calculate_happiness(couple, gifts_list)
+    pickle.dump(couples_list, open("couple.p", "wb"))
 
 def calculate_happiness(couple, gifts_list):
     '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
@@ -171,7 +175,7 @@ def calculate_happiness(couple, gifts_list):
                         logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name + ' (Additional Luxury Gift)')
                         total_cost += gift.price
                         count_gifts += 1
-            pos += 1            
+            pos += 1
             break
         couple.gift_basket.append(gift)
         logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
@@ -216,3 +220,27 @@ def print_compatible_couples(couples_list, k):
     compatible_list = sorted(couples_list, key=lambda x: x.compatibility, reverse=True)
     for i in range(k):
         print(compatible_list[i].girl.name + '\t  AND\t' + compatible_list[i].boy.name + '\tCOMPATIBILITY\t=\t' + str(compatible_list[i].compatibility))
+
+def move_on(couples_list, k):
+    '''BREAKS UP k LEAST HAPPY COUPLES AND ASSIGNS THEM NEW PARTNERS'''
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
+    unhappy_list = sorted(couples_list, key=lambda x: x.happiness)
+    print('\nBREAKING UP ' + str(k) + ' LEAST HAPPY COUPLES :')
+    boys_broken, girls_broken = [], []
+    for i in range(k):
+        logging.info('BREAKING UP  :\t' + unhappy_list[i].boy.name + ' and ' + unhappy_list[i].girl.name)
+        unhappy_list[i].break_up()
+        boys_broken.append(unhappy_list[i].boy)
+        girls_broken.append(unhappy_list[i].girl)
+        couples_list.remove(unhappy_list[i])
+    print('\n\n')
+    new_couples_list = pair_up(boys_broken, girls_broken)
+    couples_list = couples_list + new_couples_list
+    give_gifts(True, new_couples_list)
+    print_happy_couples(new_couples_list, len(couples_list))
+    pickle.dump(couples_list, open("couple.p", "wb"))

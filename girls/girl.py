@@ -25,3 +25,8 @@ class Girl(object):
         '''ASSIGNS BOY AS THE PARTNER FOR THIS GIRL'''
         self.status = 'Committed'
         self.partner = boy
+
+    def break_up(self):
+        '''BREAKS UP WITH CURRENT PARTNER'''
+        self.status = 'Single'
+        self.partner = None

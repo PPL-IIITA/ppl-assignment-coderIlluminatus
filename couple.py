@@ -35,3 +35,9 @@ class Couple(object):
         attr_diff = abs(self.boy.attr - self.girl.attr)
         intel_diff = abs(self.boy.intel - self.girl.intel)
         self.compatibility = money_diff + attr_diff + intel_diff
+
+    def break_up(self):
+        print(self.girl.name + '\t  AND\t' + self.boy.name + '\tHAPPINESS    \t=\t' + str(self.happiness))
+        self.boy.break_up()
+        self.girl.break_up()
+        self.gift_basket = []

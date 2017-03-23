@@ -27,6 +27,11 @@ class Boy(object):
         self.status = 'Committed'
         self.partner = girl
 
+    def break_up(self):
+        '''BREAKS UP WITH CURRENT PARTNER'''
+        self.status = 'Single'
+        self.partner = None
+
     def set_happiness(self, gift_basket):
         '''CALCULATES HAPPINESS OF THIS BOY'''
         if self.nature == 'Miser':

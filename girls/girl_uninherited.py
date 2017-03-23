@@ -26,6 +26,11 @@ class Girl(object):
         self.status = 'Committed'
         self.partner = boy
 
+    def break_up(self):
+        '''BREAKS UP WITH CURRENT PARTNER'''
+        self.status = 'Single'
+        self.partner = None
+
     def set_happiness(self, gift_basket):
         '''CALCULATES HAPPINESS OF THIS GIRL'''
         from math import exp, log10
