@@ -1,6 +1,6 @@
-'''A DATA STRUCTURE TO GENERATE RANDOM k ITEMS IN A LIST'''
+'''A DATA STRUCTURE TO GENERATE RANDOM OUT OF BEST k ITEMS IN A LIST'''
 
-from random import shuffle
+from random import randint
 
 class TopK(object):
 
@@ -8,9 +8,9 @@ class TopK(object):
 
     def __init__(self, generic_list):
         '''DEFAULT CONSTRUCTOR'''
-        self.generic_list = generic_list
+        sself.generic_list = sorted(generic_list, key=lambda x: x.get_primary_attribute(), reverse=True)
 
     def get_top_k(self, k):
         '''YIELDS RANDOM k RESULTS'''
-        shuffle(self.generic_list)
-        return self.generic_list[:k]
+        
+        return self.generic_list[:k][]
