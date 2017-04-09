@@ -1,16 +1,18 @@
-'''QUESTION 2'''
+'''QUESTION 5'''
 
 import pickle
 
+from algorithms import make_couples
 from algorithms import give_gifts
 from algorithms import print_gifts
 from algorithms import print_happy_couples
 from algorithms import print_compatible_couples
 
+make_couples(True, True)
 couples_list = pickle.load(open("couple.p", "rb"))
 
 if len(couples_list) >= 1:
-    give_gifts(False, couples_list, 'Valentine\'s Day')
+    give_gifts(True, couples_list, 'Valentine\'s Day')
 
     print_gifts(couples_list)
 

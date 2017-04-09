@@ -4,7 +4,7 @@ import csv
 import logging
 import pickle
 
-def make_couples(is_inherited):
+def make_couples(is_inherited, is_alternate):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
     if is_inherited:
         from boys.boy import Boy
@@ -52,12 +52,15 @@ def make_couples(is_inherited):
             girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), row[4], row[5])\
                         for row in reader]
         csvfile.close()
-
-    couples_list = pair_up(boy_pool, girl_pool)
+    
+    if is_alternate:
+        couples_list = pair_up_alternate(boy_pool, girl_pool)
+    else:
+        couples_list = pair_up(boy_pool, girl_pool)
     pickle.dump(couples_list, open("couple.p", "wb"))
 
 def pair_up(boy_pool, girl_pool):
-    '''PAIRS UP COUPLES FROM BOY POOL AND GIRL POOL'''
+    '''PAIRS UP COUPLES FROM BOY POOL AND GIRL POOL WHERE GIRLS CHOOSE BOYS'''
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
                         datefmt='%d/%m/%Y %I:%M:%S %p',\
@@ -99,7 +102,80 @@ def pair_up(boy_pool, girl_pool):
         print('NO COUPLES FORMED.')
     return couples_list
 
-def give_gifts(is_inherited, couples_list):
+def pair_up_alternate(boy_pool, girl_pool):
+    '''PAIRS UP COUPLES FROM BOY POOL AND GIRL POOL WHERE GIRLS AND BOYS CHOOSE PARTNERS ALTERNATELY'''
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='w')
+
+    boy_pool.sort(key=lambda x: x.attr, reverse=True)
+    girl_pool.sort(key=lambda x: x.mcost, reverse=True)
+
+    from couple import Couple
+    couples_list = []
+
+    logging.info('\n\nFINDING SUITABLE MATCH\n')
+    i, j = 0, 0
+    while i < len(girl_pool) or j < len(boy_pool):
+        if i < len(girl_pool):
+            while girl_pool[i].status == 'Committed':
+                i += 1
+                if i == len(girl_pool):
+                    continue
+            girl = girl_pool[i]
+            if girl.criteria == 'Attractive':
+                new_boy_pool = sorted(boy_pool, key=lambda x: x.attr, reverse=True)
+            elif girl.criteria == 'Rich':
+                new_boy_pool = sorted(boy_pool, key=lambda x: x.budget, reverse=True)
+            elif girl.criteria == 'Intelligent':
+                new_boy_pool = sorted(boy_pool, key=lambda x: x.intel, reverse=True)
+
+            for boy in new_boy_pool:
+                if boy.status == 'Single':
+                    logging.info('COURTING   :\t' + girl.name + ' is checking out ' + boy.name)
+                    if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                        boy.match(girl)
+                        girl.match(boy)
+                        logging.info('MATCHED    :\t' + girl.name + ' is committed with ' + boy.name + '\n')
+                        couples_list.append(Couple(boy, girl))
+                        break
+
+            if girl.status == 'Single':
+                logging.info('UNMATCHED  :\t' + girl.name + ' could not find a suitable partner\n')
+
+        if j < len(boy_pool):
+            while boy_pool[i].status == 'Committed':
+                j += 1
+                if j == len(boy_pool):
+                    continue
+            boy = boy_pool[j]
+
+            for girl in girl_pool:
+                if girl.status == 'Single':
+                    logging.info('COURTING   :\t' + boy.name + ' is checking out ' + girl.name)
+                    if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                        boy.match(girl)
+                        girl.match(boy)
+                        logging.info('MATCHED    :\t' + boy.name + ' is committed with ' + girl.name + '\n')
+                        couples_list.append(Couple(boy, girl))
+                        break
+
+            if boy.status == 'Single':
+                logging.info('UNMATCHED  :\t' + boy.name + ' could not find a suitable partner\n')
+
+    print('COUPLES FORMED\n')
+    if len(couples_list) >= 1:
+        for couple in couples_list:
+            print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+        print('\n\n')
+    else:
+        print('NO COUPLES FORMED.')
+    return couples_list
+
+def give_gifts(is_inherited, couples_list, day_name):
     '''BOYS GIVING GIFTS TO GIRLS'''
     if is_inherited:
         from gifts.gift import Gift
@@ -138,14 +214,13 @@ def give_gifts(is_inherited, couples_list):
                     gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, int(row[4]), int(row[5])))
         csvfile.close()
 
-    logging.info('\n\nGIFTING DATE : Valentine\'s Day\n')
+    logging.info('\n\nGIFTING DATE : ' + day_name + '\n')
     for couple in couples_list:
         calculate_happiness(couple, gifts_list)
     pickle.dump(couples_list, open("couple.p", "wb"))
 
-def calculate_happiness(couple, gifts_list):
-    '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
-
+def select_gifts(couple, gifts_list):
+    '''SELECTS GIFTS FOR A PARTICULAR COUPLE'''
     if couple.get_boy_nature() == 'Generous':
         gifts_list.sort(key=lambda x: x.price, reverse=True)
     else:
@@ -191,6 +266,10 @@ def calculate_happiness(couple, gifts_list):
                 couple.gift_basket.append(gift)
                 break
     logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
+
+def calculate_happiness(couple, gifts_list):
+    '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
+    select_gifts(couple, gifts_list)
 
     couple.girl.set_happiness(couple.gift_basket)
     couple.boy.set_happiness(couple.gift_basket)
@@ -242,5 +321,5 @@ def move_on(couples_list, k):
     print('\n\n')
     new_couples_list = pair_up(boys_broken, girls_broken)
     couples_list = couples_list + new_couples_list
-    give_gifts(True, new_couples_list)
+    give_gifts(True, new_couples_list, 'Valentine\'s Day')
     pickle.dump(couples_list, open("couple.p", "wb"))
