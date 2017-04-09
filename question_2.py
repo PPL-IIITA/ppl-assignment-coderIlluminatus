@@ -10,7 +10,7 @@ from algorithms import print_compatible_couples
 couples_list = pickle.load(open("couple.p", "rb"))
 
 if len(couples_list) >= 1:
-    give_gifts(False, couples_list)
+    give_gifts(couples_list)
 
     print_gifts(couples_list)
 

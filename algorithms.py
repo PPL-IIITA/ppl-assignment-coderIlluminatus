@@ -4,14 +4,10 @@ import csv
 import logging
 import pickle
 
-def make_couples(is_inherited):
+def make_couples():
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
-    if is_inherited:
-        from boys.boy import Boy
-        from girls.girl import Girl
-    else:
-        from boys.boy_uninherited import Boy
-        from girls.girl_uninherited import Girl
+    from boys.boy import Boy
+    from girls.girl import Girl
     from couple import Couple
 
     with open('boys.csv', 'r') as csvfile:
@@ -66,12 +62,9 @@ def make_couples(is_inherited):
 
     pickle.dump(couples_list, open("couple.p", "wb"))
 
-def give_gifts(is_inherited, couples_list):
+def give_gifts(couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
-    if is_inherited:
-        from gifts.gift import Gift
-    else:
-        from gifts.gift_uninherited import Gift
+    from gifts.gift import Gift
 
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
