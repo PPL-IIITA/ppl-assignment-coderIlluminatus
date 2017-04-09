@@ -4,53 +4,40 @@ import csv
 import logging
 import pickle
 
-def make_couples(is_inherited, is_alternate):
+def make_couples(is_alternate):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
-    if is_inherited:
-        from boys.boy import Boy
-        from boys.boy_miser import BoyMiser
-        from boys.boy_generous import BoyGenerous
-        from boys.boy_geek import BoyGeek
+    from boys.boy import Boy
+    from boys.boy_miser import BoyMiser
+    from boys.boy_generous import BoyGenerous
+    from boys.boy_geek import BoyGeek
 
-        from girls.girl import Girl
-        from girls.girl_choosy import GirlChoosy
-        from girls.girl_normal import GirlNormal
-        from girls.girl_desparate import GirlDesparate
-
-    else:
-        from boys.boy_uninherited import Boy
-        from girls.girl_uninherited import Girl
+    from girls.girl import Girl
+    from girls.girl_choosy import GirlChoosy
+    from girls.girl_normal import GirlNormal
+    from girls.girl_desparate import GirlDesparate
 
     with open('boys.csv', 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        if is_inherited:
-            boy_pool = []
-            for row in reader:
-                if row[5] == 'Miser':
-                    boy_pool.append(BoyMiser(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
-                elif row[5] == 'Generous':
-                    boy_pool.append(BoyGenerous(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
-                elif row[5] == 'Geek':
-                    boy_pool.append(BoyGeek(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
-        else:
-            boy_pool = [Boy(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4]), row[5])\
-                        for row in reader]
+        boy_pool = []
+        for row in reader:
+            if row[5] == 'Miser':
+                boy_pool.append(BoyMiser(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+            elif row[5] == 'Generous':
+                boy_pool.append(BoyGenerous(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+            elif row[5] == 'Geek':
+                boy_pool.append(BoyGeek(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
         csvfile.close()
 
     with open('girls.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        if is_inherited:
-            girl_pool = []
-            for row in reader:
-                if row[4] == 'Choosy':
-                    girl_pool.append(GirlChoosy(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
-                elif row[4] == 'Normal':
-                    girl_pool.append(GirlNormal(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
-                elif row[4] == 'Desparate':
-                    girl_pool.append(GirlDesparate(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
-        else:
-            girl_pool = [Girl(row[0], int(row[1]), int(row[2]), int(row[3]), row[4], row[5])\
-                        for row in reader]
+        girl_pool = []
+        for row in reader:
+            if row[4] == 'Choosy':
+                girl_pool.append(GirlChoosy(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
+            elif row[4] == 'Normal':
+                girl_pool.append(GirlNormal(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
+            elif row[4] == 'Desparate':
+                girl_pool.append(GirlDesparate(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
         csvfile.close()
     
     if is_alternate:
@@ -175,15 +162,12 @@ def pair_up_alternate(boy_pool, girl_pool):
         print('NO COUPLES FORMED.')
     return couples_list
 
-def give_gifts(is_inherited, couples_list, day_name):
+def give_gifts(couples_list, day_name):
     '''BOYS GIVING GIFTS TO GIRLS'''
-    if is_inherited:
-        from gifts.gift import Gift
-        from gifts.gift_essential import GiftEssential
-        from gifts.gift_luxury import GiftLuxury
-        from gifts.gift_utility import GiftUtility
-    else:
-        from gifts.gift_uninherited import Gift
+    from gifts.gift import Gift
+    from gifts.gift_essential import GiftEssential
+    from gifts.gift_luxury import GiftLuxury
+    from gifts.gift_utility import GiftUtility
 
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
@@ -198,20 +182,12 @@ def give_gifts(is_inherited, couples_list, day_name):
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             current_gift_type = row[3]
-            if is_inherited:
-                if current_gift_type == 'Essential':
-                    gifts_list.append(GiftEssential(row[0], int(row[1]), int(row[2])))
-                elif current_gift_type == 'Luxury':
-                    gifts_list.append(GiftLuxury(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
-                elif current_gift_type == 'Utility':
-                    gifts_list.append(GiftUtility(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
-            else:
-                if current_gift_type == 'Essential':
-                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, 0, 0))
-                elif current_gift_type == 'Luxury':
-                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], int(row[4]), int(row[5]), 0, 0))
-                elif current_gift_type == 'Utility':
-                    gifts_list.append(Gift(row[0], int(row[1]), int(row[2]), row[3], 0, 0, int(row[4]), int(row[5])))
+            if current_gift_type == 'Essential':
+                gifts_list.append(GiftEssential(row[0], int(row[1]), int(row[2])))
+            elif current_gift_type == 'Luxury':
+                gifts_list.append(GiftLuxury(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
+            elif current_gift_type == 'Utility':
+                gifts_list.append(GiftUtility(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
         csvfile.close()
 
     logging.info('\n\nGIFTING DATE : ' + day_name + '\n')
@@ -321,5 +297,5 @@ def move_on(couples_list, k):
     print('\n\n')
     new_couples_list = pair_up(boys_broken, girls_broken)
     couples_list = couples_list + new_couples_list
-    give_gifts(True, new_couples_list, 'Valentine\'s Day')
+    give_gifts(new_couples_list, 'Valentine\'s Day')
     pickle.dump(couples_list, open("couple.p", "wb"))
