@@ -6,8 +6,8 @@ import pickle
 
 def make_couples():
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
-    from boys.boy import Boy
-    from girls.girl import Girl
+    from boys.boy_uninherited import Boy
+    from girls.girl_uninherited import Girl
     from couple import Couple
 
     with open('boys.csv', 'r') as csvfile:
@@ -64,7 +64,7 @@ def make_couples():
 
 def give_gifts(couples_list):
     '''BOYS GIVING GIFTS TO GIRLS'''
-    from gifts.gift import Gift
+    from gifts.gift_uninherited import Gift
 
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
