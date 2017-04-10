@@ -88,7 +88,7 @@ def make_couples_secondary():
                         level=logging.DEBUG,\
                         filename='eventlog.txt',\
                         filemode='w')
-    
+
     from top_k import TopK
     from couple import Couple
     couples_list = []
@@ -97,12 +97,18 @@ def make_couples_secondary():
     i, j = 0, 0
     while i < len(girl_pool) or j < len(boy_pool):
         if i < len(girl_pool):
-            while girl_pool[i].status == 'Committed' and i < len(girl_pool):    
+            while girl_pool[i].status == 'Committed' and i < len(girl_pool):
                 i += 1
             if i == len(girl_pool):
                 continue
             girl = girl_pool[i]
             new_boy_pool = TopK(boy_pool).get_top_k(len(boy_pool))
+            if girl.criteria == 'Attractive':
+                new_boy_pool.sort(key=lambda x: x.attr, reverse=True)
+            elif girl.criteria == 'Rich':
+                new_boy_pool.sort(key=lambda x: x.budget, reverse=True)
+            elif girl.criteria == 'Intelligent':
+                new_boy_pool.sort(key=lambda x: x.intel, reverse=True)
 
             for boy in new_boy_pool:
                 if boy.status == 'Single':
@@ -125,6 +131,7 @@ def make_couples_secondary():
                 continue
             boy = boy_pool[j]
             new_girl_pool = TopK(girl_pool).get_top_k(len(girl_pool))
+            new_girl_pool.sort(key=lambda x: x.mcost, reverse=False)
 
             for girl in new_girl_pool:
                 if girl.status == 'Single':
@@ -135,6 +142,75 @@ def make_couples_secondary():
                         logging.info('MATCHED    :\t' + boy.name + ' is committed with ' + girl.name + '\n')
                         couples_list.append(Couple(boy, girl))
                         break
+
+            if boy.status == 'Single':
+                logging.info('UNMATCHED  :\t' + boy.name + ' could not find a suitable partner\n')
+            j += 1
+
+    print('COUPLES FORMED\n')
+    if len(couples_list) >= 1:
+        for couple in couples_list:
+            print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+        print('\n\n')
+    else:
+        print('NO COUPLES FORMED.')
+
+    pickle.dump(couples_list, open("couple.p", "wb"))
+
+def make_couples_random():
+    '''FORMS COUPLES BASED ON SECONDARY CRITERIA'''
+    boy_pool = get_boy_pool()
+    girl_pool = get_girl_pool()
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='w')
+
+    from random_k import RandomK
+    from couple import Couple
+    couples_list = []
+
+    logging.info('\n\nFINDING SUITABLE MATCH\n')
+    i, j = 0, 0
+    while i < len(girl_pool) or j < len(boy_pool):
+        if i < len(girl_pool):
+            while girl_pool[i].status == 'Committed' and i < len(girl_pool):
+                i += 1
+            if i == len(girl_pool):
+                continue
+            girl = girl_pool[i]
+
+            boy = RandomK(boy_pool).get_random_k(len(boy_pool) - 1)
+            if boy.status == 'Single':
+                logging.info('COURTING   :\t' + girl.name + ' is checking out ' + boy.name)
+                if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                    boy.match(girl)
+                    girl.match(boy)
+                    logging.info('MATCHED    :\t' + girl.name + ' is committed with ' + boy.name + '\n')
+                    couples_list.append(Couple(boy, girl))
+
+            if girl.status == 'Single':
+                logging.info('UNMATCHED  :\t' + girl.name + ' could not find a suitable partner\n')
+            i += 1
+
+        if j < len(boy_pool):
+            while boy_pool[i].status == 'Committed' and j < len(boy_pool):
+                j += 1
+            if j == len(boy_pool):
+                continue
+            boy = boy_pool[j]
+            boy = RandomK(boy_pool).get_random_k(len(boy_pool) - 1)
+
+            if girl.status == 'Single':
+                logging.info('COURTING   :\t' + boy.name + ' is checking out ' + girl.name)
+                if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                    boy.match(girl)
+                    girl.match(boy)
+                    logging.info('MATCHED    :\t' + boy.name + ' is committed with ' + girl.name + '\n')
+                    couples_list.append(Couple(boy, girl))
 
             if boy.status == 'Single':
                 logging.info('UNMATCHED  :\t' + boy.name + ' could not find a suitable partner\n')
@@ -283,6 +359,40 @@ def give_gifts(couples_list, day_name, choice):
         calculate_happiness(couple, gifts_list, choice)
     pickle.dump(couples_list, open("couple.p", "wb"))
 
+def give_gifts_secondary(couples_list, day_name):
+    '''BOYS GIVING GIFTS TO GIRLS BASED ON SECONDARY CRITERIA'''
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
+
+    gifts_list = get_gifts_list()
+
+    logging.info('\n\nGIFTING DATE : ' + day_name + '\n')
+    for couple in couples_list:
+        calculate_happiness_secondary(couple, gifts_list)
+    pickle.dump(couples_list, open("couple.p", "wb"))
+
+def give_gifts_random(couples_list, day_name):
+    '''BOYS GIVING GIFTS TO GIRLS BASED ON RANDOM PICKS'''
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
+
+    gifts_list = get_gifts_list()
+
+    logging.info('\n\nGIFTING DATE : ' + day_name + '\n')
+    for couple in couples_list:
+        calculate_happiness_random(couple, gifts_list)
+    pickle.dump(couples_list, open("couple.p", "wb"))
+
 def select_gifts(couple, gifts_list):
     '''SELECTS GIFTS FOR A PARTICULAR COUPLE'''
     if couple.get_boy_nature() == 'Generous':
@@ -331,6 +441,75 @@ def select_gifts(couple, gifts_list):
                 break
     logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
 
+def select_gifts_secondary(couple, gifts_list):
+    '''SELECTS GIFTS FOR A PARTICULAR COUPLE BASED ON SECONDARY CRITERIA'''
+    from top_k import TopK
+    gifts_list = TopK(gifts_list).get_top_k(len(gifts_list))
+    gifts_list.sort(key=lambda x: x.value, reverse=True)
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
+
+    logging.info('ENTERING  :\t' + couple.boy.name + ' and ' + couple.girl.name)
+    total_cost, count_gifts, pos = 0, 0, 0
+    for gift in gifts_list:
+        if total_cost + gift.price >= couple.boy.budget:
+            if couple.get_boy_nature() != 'Generous':
+                couple.gift_basket.append(gift)
+                logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
+                total_cost += gift.price
+                count_gifts += 1
+
+            #A GEEK BOY CHECKS FOR AN ADDITIONAL LUXURY GIFT, IF BUDGET PERMITS
+            if couple.get_boy_nature() == 'Geek' and total_cost < couple.boy.budget:
+                for gift_index in range(pos + 1, len(gifts_list)):
+                    if gifts_list[gift_index].nature == 'Luxury' and total_cost + gifts_list[gift_index] <= couple.boy.budget:
+                        logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name + ' (Additional Luxury Gift)')
+                        total_cost += gift.price
+                        count_gifts += 1
+            pos += 1
+            break
+        couple.gift_basket.append(gift)
+        logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
+        total_cost += gift.price
+        count_gifts += 1
+
+    #INCREASE BUDGET WHERE GIFTING IS NOT POSSIBLE
+    if count_gifts == 0:
+        couple.boy.budget = min(gift.price for gift in gifts_list)
+        for gift in gifts_list:
+            if couple.boy.budget == gift.price:
+                logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
+                couple.gift_basket.append(gift)
+                break
+    logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
+
+def select_gifts_random(couple, gifts_list):
+    '''SELECTS GIFTS FOR A PARTICULAR COUPLE BASED ON SECONDARY CRITERIA'''
+    from random_k import RandomK
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='a')
+
+    logging.info('ENTERING  :\t' + couple.boy.name + ' and ' + couple.girl.name)
+    total_cost, count_gifts = 0, 0
+    while total_cost <= couple.boy.budget:
+        gift = RandomK(gifts_list).get_random_k(len(gifts_list))
+        couple.gift_basket.append(gift)
+        logging.info('GIFTING   :\t' + couple.boy.name + ' is giving ' + gift.name + ' to ' + couple.girl.name)
+        total_cost += gift.price
+        count_gifts += 1
+
+    logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
+
 def calculate_happiness(couple, gifts_list, choice):
     '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
     from selectors.selector import Selector
@@ -342,6 +521,24 @@ def calculate_happiness(couple, gifts_list, choice):
         SelectorAny(couple, gifts_list).select_gifts()
     elif choice == 'every':
         SelectorEvery(couple, gifts_list).select_gifts()
+
+    couple.girl.set_happiness(couple.gift_basket)
+    couple.boy.set_happiness(couple.gift_basket)
+    couple.set_happiness()
+    couple.set_compatibility()
+
+def calculate_happiness_secondary(couple, gifts_list):
+    '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE USING SECONDARY CRITERIA GIFTING MECHANISM'''
+    select_gifts_secondary(couple, gifts_list)
+
+    couple.girl.set_happiness(couple.gift_basket)
+    couple.boy.set_happiness(couple.gift_basket)
+    couple.set_happiness()
+    couple.set_compatibility()
+
+def calculate_happiness_random(couple, gifts_list):
+    '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE USING RANDOM PICK GIFTING MECHANISM'''
+    select_gifts_random(couple, gifts_list)
 
     couple.girl.set_happiness(couple.gift_basket)
     couple.boy.set_happiness(couple.gift_basket)

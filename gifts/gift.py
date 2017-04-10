@@ -12,4 +12,4 @@ class Gift(object):
 
     def get_primary_attribute(self):
         '''RETURNS PRIMARY CRITERION ATTRIBUTE'''
-        return self.price
+        return -self.price
