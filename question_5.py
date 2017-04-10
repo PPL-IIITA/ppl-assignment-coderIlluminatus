@@ -12,7 +12,7 @@ make_couples(True)
 couples_list = pickle.load(open("couple.p", "rb"))
 
 if len(couples_list) >= 1:
-    give_gifts(couples_list, 'Valentine\'s Day')
+    give_gifts(couples_list, 'Valentine\'s Day', 'default')
 
     print_gifts(couples_list)
 

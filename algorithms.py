@@ -42,6 +42,27 @@ def get_girl_pool():
         csvfile.close()
     return girl_pool
 
+def get_gifts_list():
+    from gifts.gift import Gift
+    from gifts.gift_essential import GiftEssential
+    from gifts.gift_luxury import GiftLuxury
+    from gifts.gift_utility import GiftUtility
+
+    gifts_list = []
+
+    with open('gifts.csv', 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            current_gift_type = row[3]
+            if current_gift_type == 'Essential':
+                gifts_list.append(GiftEssential(row[0], int(row[1]), int(row[2])))
+            elif current_gift_type == 'Luxury':
+                gifts_list.append(GiftLuxury(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
+            elif current_gift_type == 'Utility':
+                gifts_list.append(GiftUtility(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
+        csvfile.close()
+    return gifts_list
+
 def make_couples(is_alternate):
     '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
     boy_pool = get_boy_pool()
@@ -169,12 +190,8 @@ def pair_up_alternate(boy_pool, girl_pool):
         print('NO COUPLES FORMED.')
     return couples_list
 
-def give_gifts(couples_list, day_name):
+def give_gifts(couples_list, day_name, choice):
     '''BOYS GIVING GIFTS TO GIRLS'''
-    from gifts.gift import Gift
-    from gifts.gift_essential import GiftEssential
-    from gifts.gift_luxury import GiftLuxury
-    from gifts.gift_utility import GiftUtility
 
     #SPECIFYING FORMAT OF EVENT LOG
     logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
@@ -183,23 +200,11 @@ def give_gifts(couples_list, day_name):
                         filename='eventlog.txt',\
                         filemode='a')
 
-    gifts_list = []
-
-    with open('gifts.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
-        for row in reader:
-            current_gift_type = row[3]
-            if current_gift_type == 'Essential':
-                gifts_list.append(GiftEssential(row[0], int(row[1]), int(row[2])))
-            elif current_gift_type == 'Luxury':
-                gifts_list.append(GiftLuxury(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
-            elif current_gift_type == 'Utility':
-                gifts_list.append(GiftUtility(row[0], int(row[1]), int(row[2]), int(row[4]), int(row[5])))
-        csvfile.close()
+    gifts_list = get_gifts_list()
 
     logging.info('\n\nGIFTING DATE : ' + day_name + '\n')
     for couple in couples_list:
-        calculate_happiness(couple, gifts_list)
+        calculate_happiness(couple, gifts_list, choice)
     pickle.dump(couples_list, open("couple.p", "wb"))
 
 def select_gifts(couple, gifts_list):
@@ -250,9 +255,17 @@ def select_gifts(couple, gifts_list):
                 break
     logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
 
-def calculate_happiness(couple, gifts_list):
+def calculate_happiness(couple, gifts_list, choice):
     '''CALCULATES HAPPINESS AND COMPATIBILITY OF COUPLE'''
-    select_gifts(couple, gifts_list)
+    from selectors.selector import Selector
+    from selectors.selector_any import SelectorAny
+    from selectors.selector_every import SelectorEvery
+    if choice == 'default':
+        Selector(couple, gifts_list).select_gifts()
+    elif choice == 'any':
+        SelectorAny(couple, gifts_list).select_gifts()
+    elif choice == 'every':
+        SelectorEvery(couple, gifts_list).select_gifts()
 
     couple.girl.set_happiness(couple.gift_basket)
     couple.boy.set_happiness(couple.gift_basket)
@@ -304,5 +317,5 @@ def move_on(couples_list, k):
     print('\n\n')
     new_couples_list = pair_up(boys_broken, girls_broken)
     couples_list = couples_list + new_couples_list
-    give_gifts(new_couples_list, 'Valentine\'s Day')
+    give_gifts(new_couples_list, 'Valentine\'s Day', 'default')
     pickle.dump(couples_list, open("couple.p", "wb"))
