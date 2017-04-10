@@ -56,7 +56,8 @@
     OR
     python3 question_8.py every
 ```
->**NOTE**: Question 8 uses command line arguments for implementing various gift selection mechanisms.
+>**NOTE**: Question 8 uses command line arguments for implementing various gift selection mechanisms.  
+>
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For default mechanism, no argument is required.
 
 * All events will be logged in `eventlog.txt`
