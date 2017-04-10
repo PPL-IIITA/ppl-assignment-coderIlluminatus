@@ -1,7 +1,5 @@
 '''QUESTION 7'''
 
-import pickle
-
 from random import sample
 
 from partners.partner_linear import PartnerLinear

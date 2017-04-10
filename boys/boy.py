@@ -30,3 +30,7 @@ class Boy(object):
         '''BREAKS UP WITH CURRENT PARTNER'''
         self.status = 'Single'
         self.partner = None
+
+    def get_primary_attribute(self):
+        '''RETURNS PRIMARY CRITERION ATTRIBUTE'''
+        return self.budget

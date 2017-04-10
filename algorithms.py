@@ -5,6 +5,7 @@ import logging
 import pickle
 
 def get_boy_pool():
+    '''GENERATES BOY OBJECT LIST FROM .csv FILE'''
     from boys.boy import Boy
     from boys.boy_miser import BoyMiser
     from boys.boy_generous import BoyGenerous
@@ -24,6 +25,7 @@ def get_boy_pool():
     return boy_pool
 
 def get_girl_pool():
+    '''GENERATES GIRL OBJECT LIST FROM .csv FILE'''
     from girls.girl import Girl
     from girls.girl_choosy import GirlChoosy
     from girls.girl_normal import GirlNormal
@@ -43,6 +45,7 @@ def get_girl_pool():
     return girl_pool
 
 def get_gifts_list():
+    '''GENERATES GIFT OBJECT LIST FROM .csv FILE'''
     from gifts.gift import Gift
     from gifts.gift_essential import GiftEssential
     from gifts.gift_luxury import GiftLuxury
@@ -72,6 +75,79 @@ def make_couples(is_alternate):
         couples_list = pair_up_alternate(boy_pool, girl_pool)
     else:
         couples_list = pair_up(boy_pool, girl_pool)
+    pickle.dump(couples_list, open("couple.p", "wb"))
+
+def make_couples_secondary():
+    '''FORMS COUPLES BASED ON SECONDARY CRITERIA'''
+    boy_pool = get_boy_pool()
+    girl_pool = get_girl_pool()
+
+    #SPECIFYING FORMAT OF EVENT LOG
+    logging.basicConfig(format='%(asctime)s %(name)-6s %(levelname) s: %(message)s',\
+                        datefmt='%d/%m/%Y %I:%M:%S %p',\
+                        level=logging.DEBUG,\
+                        filename='eventlog.txt',\
+                        filemode='w')
+    
+    from top_k import TopK
+    from couple import Couple
+    couples_list = []
+
+    logging.info('\n\nFINDING SUITABLE MATCH\n')
+    i, j = 0, 0
+    while i < len(girl_pool) or j < len(boy_pool):
+        if i < len(girl_pool):
+            while girl_pool[i].status == 'Committed' and i < len(girl_pool):    
+                i += 1
+            if i == len(girl_pool):
+                continue
+            girl = girl_pool[i]
+            new_boy_pool = TopK(boy_pool).get_top_k(len(boy_pool))
+
+            for boy in new_boy_pool:
+                if boy.status == 'Single':
+                    logging.info('COURTING   :\t' + girl.name + ' is checking out ' + boy.name)
+                    if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                        boy.match(girl)
+                        girl.match(boy)
+                        logging.info('MATCHED    :\t' + girl.name + ' is committed with ' + boy.name + '\n')
+                        couples_list.append(Couple(boy, girl))
+                        break
+
+            if girl.status == 'Single':
+                logging.info('UNMATCHED  :\t' + girl.name + ' could not find a suitable partner\n')
+            i += 1
+
+        if j < len(boy_pool):
+            while boy_pool[i].status == 'Committed' and j < len(boy_pool):
+                j += 1
+            if j == len(boy_pool):
+                continue
+            boy = boy_pool[j]
+            new_girl_pool = TopK(girl_pool).get_top_k(len(girl_pool))
+
+            for girl in new_girl_pool:
+                if girl.status == 'Single':
+                    logging.info('COURTING   :\t' + boy.name + ' is checking out ' + girl.name)
+                    if boy.check_elligibility(girl) and girl.check_elligibility(boy):
+                        boy.match(girl)
+                        girl.match(boy)
+                        logging.info('MATCHED    :\t' + boy.name + ' is committed with ' + girl.name + '\n')
+                        couples_list.append(Couple(boy, girl))
+                        break
+
+            if boy.status == 'Single':
+                logging.info('UNMATCHED  :\t' + boy.name + ' could not find a suitable partner\n')
+            j += 1
+
+    print('COUPLES FORMED\n')
+    if len(couples_list) >= 1:
+        for couple in couples_list:
+            print(couple.girl.name + '\t  AND\t' + couple.boy.name)
+        print('\n\n')
+    else:
+        print('NO COUPLES FORMED.')
+
     pickle.dump(couples_list, open("couple.p", "wb"))
 
 def pair_up(boy_pool, girl_pool):
