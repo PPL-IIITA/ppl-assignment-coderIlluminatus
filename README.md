@@ -43,22 +43,29 @@
     python3 test_utility.py
 ```
 
-* Question 1:
+* Question x (x ∈ [3, 7] ∪ [9, 10]):
 ``` 
-    python3 question_1.py
+    python3 question_x.py
 ```
 
-* Question 2:
-
+* Question 8:
+``` 
+    python3 question_8.py
+    OR
+    python3 question_8.py any
+    OR
+    python3 question_8.py every
 ```
-    python3 question_2.py
-```
->**NOTE**: Question 2 uses the couples allocated in Question 1, as per given assignment.  
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please execute Question 1 before executing Question 2
+>**NOTE**: Question 8 uses command line arguments for implementing various gift selection mechanisms.
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For default mechanism, no argument is required.
 
 * All events will be logged in `eventlog.txt`
 * Algorithmic functions are present in `algorithms.py`
-* Class definitions are present in `boy_uninherited.py`, `girl_uninherited.py`, `gift_uninherited.py` and `couple.py`
+* Class definitions for boys, girls and gifts are present in directories `boys`, `girls` and `gifts` respectively
+* Class definition for couple is present in `couple.py`
+* Class definitions for searching girlfriend names are present in `partners` directory
+* Class definitions for gift selectors are present in `selectors` directory
+* Data stuctures defined for questions 9 and 10 are present in `top_k.py` and `random_k.py`
 * Random generator functions are present in `test_utility.py`
 * .csv files `boys.csv`, `girls.csv` and `gifts.csv` will have randomly generated data set
 
