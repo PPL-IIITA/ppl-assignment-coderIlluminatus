@@ -1,0 +1,24 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classboys_1_1boy_1_1_boy.html" title="boys.boy.Boy" alt="" coords="148,81,251,108"/>
+<area shape="rect" id="node6" href="$classcouple_1_1_couple.html" title="couple.Couple" alt="" coords="147,224,252,251"/>
+<area shape="rect" id="node7" href="$classgifts_1_1gift_1_1_gift.html" title="gifts.gift.Gift" alt="" coords="152,275,247,301"/>
+<area shape="rect" id="node11" href="$classgirls_1_1girl_1_1_girl.html" title="girls.girl.Girl" alt="" coords="154,413,245,440"/>
+<area shape="rect" id="node15" href="$classpartners_1_1partner_1_1_partner.html" title="partners.partner.Partner" alt="" coords="120,501,279,528"/>
+<area shape="rect" id="node19" href="$classrandom__k_1_1_random_k.html" title="random_k.RandomK" alt="" coords="129,552,270,579"/>
+<area shape="rect" id="node20" href="$classselectors_1_1selector_1_1_selector.html" title="selectors.selector.Selector" alt="" coords="111,643,288,669"/>
+<area shape="rect" id="node23" href="$classtop__k_1_1_top_k.html" title="top_k.TopK" alt="" coords="155,693,244,720"/>
+<area shape="rect" id="node3" href="$classboys_1_1boy__geek_1_1_boy_geek.html" title="boys.boy_geek.BoyGeek" alt="" coords="365,5,533,32"/>
+<area shape="rect" id="node4" href="$classboys_1_1boy__generous_1_1_boy_generous.html" title="boys.boy_generous.BoyGenerous" alt="" coords="339,56,558,83"/>
+<area shape="rect" id="node5" href="$classboys_1_1boy__miser_1_1_boy_miser.html" title="boys.boy_miser.BoyMiser" alt="" coords="362,107,535,133"/>
+<area shape="rect" id="node8" href="$classgifts_1_1gift__essential_1_1_gift_essential.html" title="gifts.gift_essential.Gift\lEssential" alt="" coords="372,158,525,199"/>
+<area shape="rect" id="node9" href="$classgifts_1_1gift__luxury_1_1_gift_luxury.html" title="gifts.gift_luxury.GiftLuxury" alt="" coords="361,224,536,251"/>
+<area shape="rect" id="node10" href="$classgifts_1_1gift__utility_1_1_gift_utility.html" title="gifts.gift_utility.GiftUtility" alt="" coords="365,275,532,301"/>
+<area shape="rect" id="node12" href="$classgirls_1_1girl__choosy_1_1_girl_choosy.html" title="girls.girl_choosy.GirlChoosy" alt="" coords="356,325,541,352"/>
+<area shape="rect" id="node13" href="$classgirls_1_1girl__desparate_1_1_girl_desparate.html" title="girls.girl_desparate.Girl\lDesparate" alt="" coords="371,377,526,418"/>
+<area shape="rect" id="node14" href="$classgirls_1_1girl__normal_1_1_girl_normal.html" title="girls.girl_normal.GirlNormal" alt="" coords="359,443,538,469"/>
+<area shape="rect" id="node16" href="$classpartners_1_1partner__binary_1_1_partner_binary.html" title="partners.partner_binary.\lPartnerBinary" alt="" coords="369,494,528,535"/>
+<area shape="rect" id="node17" href="$classpartners_1_1partner__hash_1_1_partner_hash.html" title="partners.partner_hash.PartnerHash" alt="" coords="336,560,561,587"/>
+<area shape="rect" id="node18" href="$classpartners_1_1partner__linear_1_1_partner_linear.html" title="partners.partner_linear.\lPartnerLinear" alt="" coords="371,611,526,653"/>
+<area shape="rect" id="node21" href="$classselectors_1_1selector__any_1_1_selector_any.html" title="selectors.selector\l_any.SelectorAny" alt="" coords="386,677,511,718"/>
+<area shape="rect" id="node22" href="$classselectors_1_1selector__every_1_1_selector_every.html" title="selectors.selector\l_every.SelectorEvery" alt="" coords="375,742,522,783"/>
+</map>

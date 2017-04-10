@@ -1,0 +1,5 @@
+<map id="gifts.gift.Gift" name="gifts.gift.Gift">
+<area shape="rect" id="node3" href="$classgifts_1_1gift__essential_1_1_gift_essential.html" title="gifts.gift_essential.Gift\lEssential" alt="" coords="264,5,417,47"/>
+<area shape="rect" id="node4" href="$classgifts_1_1gift__luxury_1_1_gift_luxury.html" title="gifts.gift_luxury.GiftLuxury" alt="" coords="253,71,428,98"/>
+<area shape="rect" id="node5" href="$classgifts_1_1gift__utility_1_1_gift_utility.html" title="gifts.gift_utility.GiftUtility" alt="" coords="257,122,424,149"/>
+</map>
