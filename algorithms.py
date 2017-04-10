@@ -158,7 +158,7 @@ def make_couples_secondary():
     pickle.dump(couples_list, open("couple.p", "wb"))
 
 def make_couples_random():
-    '''FORMS COUPLES BASED ON SECONDARY CRITERIA'''
+    '''FORMS COUPLES BASED ON RANDOM PICK'''
     boy_pool = get_boy_pool()
     girl_pool = get_girl_pool()
 
@@ -489,7 +489,7 @@ def select_gifts_secondary(couple, gifts_list):
     logging.info('LEAVING   :\t' + couple.boy.name + ' and ' + couple.girl.name + '\n')
 
 def select_gifts_random(couple, gifts_list):
-    '''SELECTS GIFTS FOR A PARTICULAR COUPLE BASED ON SECONDARY CRITERIA'''
+    '''SELECTS GIFTS FOR A PARTICULAR COUPLE BASED ON RANDOM PICK'''
     from random_k import RandomK
 
     #SPECIFYING FORMAT OF EVENT LOG

@@ -3,7 +3,7 @@
 ### Sayantan Chatterjee - IIT 2015 511
 
 <img src="https://img.shields.io/badge/language-Python3-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/completion-20%25-yellow.svg"/>
+<img src="https://img.shields.io/badge/completion-100%25-yellow.svg"/>
 <img src="https://img.shields.io/badge/elementary OS-0.4-red.svg"/>
 <img src="https://img.shields.io/badge/VS Code-1.8.1-blue.svg"/>  
 
