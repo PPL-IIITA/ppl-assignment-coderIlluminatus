@@ -4,17 +4,11 @@ import csv
 import logging
 import pickle
 
-def make_couples(is_alternate):
-    '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
+def get_boy_pool():
     from boys.boy import Boy
     from boys.boy_miser import BoyMiser
     from boys.boy_generous import BoyGenerous
     from boys.boy_geek import BoyGeek
-
-    from girls.girl import Girl
-    from girls.girl_choosy import GirlChoosy
-    from girls.girl_normal import GirlNormal
-    from girls.girl_desparate import GirlDesparate
 
     with open('boys.csv', 'r') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
@@ -27,6 +21,13 @@ def make_couples(is_alternate):
             elif row[5] == 'Geek':
                 boy_pool.append(BoyGeek(row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])))
         csvfile.close()
+    return boy_pool
+
+def get_girl_pool():
+    from girls.girl import Girl
+    from girls.girl_choosy import GirlChoosy
+    from girls.girl_normal import GirlNormal
+    from girls.girl_desparate import GirlDesparate
 
     with open('girls.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
@@ -39,7 +40,13 @@ def make_couples(is_alternate):
             elif row[4] == 'Desparate':
                 girl_pool.append(GirlDesparate(row[0], int(row[1]), int(row[2]), int(row[3]), row[5]))
         csvfile.close()
-    
+    return girl_pool
+
+def make_couples(is_alternate):
+    '''FORMS COUPLES BASED ON BUDGET AND MAINTENANCE CRITERIA'''
+    boy_pool = get_boy_pool()
+    girl_pool = get_girl_pool()
+
     if is_alternate:
         couples_list = pair_up_alternate(boy_pool, girl_pool)
     else:

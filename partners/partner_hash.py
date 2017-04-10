@@ -21,5 +21,8 @@ class PartnerHash(Partner):
         '''RETURNS GIRLFRIEND NAME LIST USING HASH TABLE IMPLEMENTATION'''
         self.generate_boy_hash()
         for boy_name in self.boy_name_list:
-            self.girl_name_list.append(self.boy_hash[boy_name])
+            if boy_name in self.boy_hash:
+                self.girl_name_list.append(self.boy_hash[boy_name])
+            else:
+                self.girl_name_list.append('NO GIRLFRIEND')
         return self.girl_name_list

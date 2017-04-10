@@ -2,22 +2,26 @@
 
 import pickle
 
-from algorithms import make_couples
-from algorithms import give_gifts
-from algorithms import move_on
+from random import sample
 
-make_couples(True)
-couples_list = pickle.load(open("couple.p", "rb"))
+from partners.partner_linear import PartnerLinear
+from partners.partner_binary import PartnerBinary
+from partners.partner_hash import PartnerHash
 
-if len(couples_list) >= 1:
-    from random import randint
+from algorithms import get_boy_pool
 
-    t = randint(1, len(couples_list))
-    for i in range(t):
-        day_name = 'Day ' + str(i + 1)
-        give_gifts(couples_list, day_name)
-        move_on(couples_list, t)
-        couples_list = pickle.load(open("couple.p", "rb"))
+boy_pool_size = len(get_boy_pool())
+boy_num_list = sample(range(boy_pool_size), (boy_pool_size // 2))
 
-else:
-    print("NO COUPLES FOUND.")
+boy_name_list = [('Boy ' + str(i)) for i in boy_num_list]
+girl_name_list_linear = PartnerLinear(boy_name_list).get_girlfriend_name_linear_search()
+girl_name_list_binary = PartnerBinary(boy_name_list).get_girlfriend_name_binary_search()
+girl_name_list_hash = PartnerHash(boy_name_list).get_girlfriend_name_hash_table()
+
+print('RESULTS FOR VARIOUS IMPLEMENTATIONS\n\n')
+for i in range(len(boy_name_list)):
+    print('BOY NAME\t:\t', boy_name_list[i])
+    print('LINKED LIST\t:\t', girl_name_list_linear[i])
+    print('BINARY SEARCH\t:\t', girl_name_list_binary[i])
+    print('HASH TABLE\t:\t', girl_name_list_hash[i])
+    print('\n')

@@ -15,13 +15,18 @@ class PartnerBinary(Partner):
         super(PartnerBinary, self).generate_committed_boy_pool()
         self.committed_boy_pool.sort(key=lambda x: x.name)
         for boy_name in self.boy_name_list:
-            low, high = 0, len(self.committed_boy_pool - 1)
+            has_girlfriend = False
+            low, high = 0, len(self.committed_boy_pool) - 1
             while low <= high:
                 mid = (high + low) // 2
                 if self.committed_boy_pool[mid].name == boy_name:
+                    has_girlfriend = True
                     self.girl_name_list.append(self.committed_boy_pool[mid].partner.name)
+                    break
                 elif self.committed_boy_pool[mid].name > boy_name:
                     high = mid - 1
                 else:
                     low = mid + 1
+            if not has_girlfriend:
+                self.girl_name_list.append('NO GIRLFRIEND')
         return self.girl_name_list
